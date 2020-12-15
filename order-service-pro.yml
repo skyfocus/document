@@ -1,9 +1,20 @@
 server:
-  port: 9010
+  port: 9020
 
 spring:
   application:
-    name: platform-product
+    name: order-service
+  cloud:
+    sentinel:
+      eager: true
+      transport:
+        dashboard: localhost:8080
+      datasource:
+        ds1:
+          file:
+            file: classpath:flowrule.json # 加载流控规则配置
+            data-type: json
+            rule-type: flow
   zipkin:
     sender:
       type: rabbit
@@ -20,12 +31,13 @@ spring:
       simple:
         retry:
           enabled: true
+feign:
+  sentinel:
+    enabled: true # 开启对feign的支持
+
 eureka:
   instance:
     prefer-ip-address: true # 使用IP地址注册
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
-    lease-renewal-interval-in-seconds: 5 # 想Eureka发送心跳的间隔时间
-    lease-expiration-duration-in-seconds: 10 # 多少秒之后Eureka没有收到微服务的心跳认为服务已经宕机
   client:
     service-url:
       defaultZone: http://127.0.0.1:9000/eureka
