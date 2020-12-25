@@ -29,4 +29,4 @@ management:
 
 logging:
   level:
-    root: warn
+    root: error
