@@ -27,6 +27,7 @@ management:
       exposure:
         include: health, info, refresh
 
+
 logging:
   level:
     root: debug
