@@ -14,3 +14,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:9000/eureka
+
+# 暴露刷新的端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, refresh
