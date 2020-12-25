@@ -30,4 +30,4 @@ management:
 
 logging:
   level:
-    root: warn
+    root: info
