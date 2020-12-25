@@ -28,4 +28,4 @@ management:
 
 logging:
   level:
-    root: warn
+    root: debug
