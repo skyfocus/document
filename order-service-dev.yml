@@ -4,12 +4,22 @@ server:
 spring:
   application:
     name: order-service
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      probability: 1 # 采样比 0 - 1，1表示采样所有日志，0.1表示采样10%的日志
   rabbitmq:
-    host: 127.0.0.1
+    host: localhost
     port: 5672
-    username: guest
-    password: guest
-
+    listener: # 重试策略
+      direct:
+        retry:
+          enabled: true
+      simple:
+        retry:
+          enabled: true
 eureka:
   instance:
     prefer-ip-address: true # 使用IP地址注册
