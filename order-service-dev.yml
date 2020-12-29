@@ -36,8 +36,3 @@ management:
     web:
       exposure:
         include: health, info, refresh
-
-
-logging:
-  level:
-    root: info
