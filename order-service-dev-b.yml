@@ -1,0 +1,38 @@
+server:
+  port: 9021
+
+spring:
+  application:
+    name: order-service-b
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      probability: 1 # 采样比 0 - 1，1表示采样所有日志，0.1表示采样10%的日志
+  rabbitmq:
+    host: localhost
+    port: 5672
+    listener: # 重试策略
+      direct:
+        retry:
+          enabled: true
+      simple:
+        retry:
+          enabled: true
+eureka:
+  instance:
+    prefer-ip-address: true # 使用IP地址注册
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 5 # 向Eureka发送心跳的间隔时间
+    lease-expiration-duration-in-seconds: 10 # 多少秒之后Eureka没有收到微服务的心跳认为服务已经宕机
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9000/eureka
+
+# 暴露刷新的端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, refresh
